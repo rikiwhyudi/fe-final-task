@@ -34,12 +34,6 @@ function CarouselSection() {
           src="/assets/img/carousel1.png"
           alt="Third slide"
           />
-        {/* <Carousel.Caption>
-          <h5>Third slide label</h5>
-          <p>
-            Praesent commodo cursus magna, vel scelerisque nisl consectetur.
-          </p>
-        </Carousel.Caption> */}
       </Carousel.Item>
     </Carousel>
     </>

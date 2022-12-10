@@ -26,15 +26,21 @@ function AddMusic() {
   };
 
 
-  useEffect(() => {
-    if (state.isLogin === false || state.user.status === "customer") {
-      navigate('/')
+  const checkAuth = () => {
+    if (state.isLogin === false) {
+        navigate("/")
+    } else if (state.user.status === "customer") {
+        navigate("/dashboard")
     } else {
       getSingerID()
     }
-  },[])
+}
 
-  // console.log(singer)
+useEffect(() => {
+    checkAuth()
+}, [])
+
+  // console.log(singer[0].id)
 
 
   const [preview, setPreview] = useState(null); //For image preview
@@ -46,6 +52,7 @@ function AddMusic() {
     music_file: "" ,
   });
 
+  // console.log(form)
   const handleChange = (e) => {
     setForm({
       ...form,
@@ -140,8 +147,9 @@ function AddMusic() {
               className="form-select form-select-lg mb-3"
               aria-label="form-select-lg" name="singer_id"
               >
+              <option value="" className="d-none" selected disabled>Singer ID</option>
               { singer.map((data) => (
-              <option name="singer_id" key={data.id} value={data.id}>{data.name}</option>
+              <option value={data.id}>{data.name}</option>
               ))}
             </select>
 

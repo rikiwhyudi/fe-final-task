@@ -31,7 +31,7 @@ function Login() {
       e.preventDefault()
   
         // Insert data user to database
-        const response = await API.post('/login', form);
+        const response = await API.post("/login", form);
         // const { status, name, email, token } = response.data.data
         if (response?.status === 200) {
           dispatch({

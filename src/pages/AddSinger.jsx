@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Container } from "react-bootstrap";
 import { useMutation } from "react-query";
 import { useNavigate } from "react-router-dom";
@@ -16,12 +16,14 @@ function AddSinger() {
   const checkAuth = () => {
     if (state.isLogin === "false") {
       navigate("/")
-    } else if (state.isLogin === "costumer") {
+    } else if (state.user.status === "customer") {
       navigate("/dashboard")
     }
   }
   
-  checkAuth()
+  useEffect(() => {
+    checkAuth()
+  }, [])
 
   const [preview, setPreview] = useState(null); //For image preview
   const [form, setForm] = useState({
