@@ -14,7 +14,7 @@ function AddSinger() {
   const [state] = useContext(UserContext)
 
   const checkAuth = () => {
-    if (state.isLogin === "false") {
+    if (state.isLogin === false) {
       navigate("/")
     } else if (state.user.status === "customer") {
       navigate("/dashboard")

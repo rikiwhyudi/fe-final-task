@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
 import Header from "../components/Header";
@@ -9,15 +9,22 @@ function Home() {
   const navigate = useNavigate();
   const [state] = useContext(UserContext);
 
-  console.log("ini isi state home js", state.isLogin)
+  console.log("ini isi state home js", state)
 
   const checkAuth = () => {
     if (state.isLogin === true) {
-      navigate("/dashboard");
-    } 
+      if (state.user.status === "admin") {
+        navigate("/income")
+      } else {
+        navigate("/dashboard");
+      }
+    }
   };
 
-  checkAuth()
+  useEffect(() => {
+    checkAuth()
+    
+  }, [])
   
   const [isRegister, setIsRegister] = useState(false);
 

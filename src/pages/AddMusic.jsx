@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import { API } from "../config/api";
 import { UserContext } from "../context/UserContext";
+import { useQuery } from "react-query";
 
 function AddMusic() {
   const title = "Add Music";
@@ -14,16 +15,24 @@ function AddMusic() {
 
   const navigate = useNavigate();
 
-  const [singer, setSinger] = useState([])
+    // fetching API get all singers
+    const { data: singer } = useQuery("singersCache", async () => {
+      const response = await API.get("/singers");
+      // console.log(response.data);
+      return response.data.data;
+    });
 
-  const getSingerID = async () => {
-    try {
-      const res = await API.get(`/singers`);
-      setSinger(res.data.data);
-    } catch (error) {
-      console.log(error)
-    }
-  };
+
+  // const [singer, setSinger] = useState([])
+
+  // const getSingerID = async () => {
+  //   try {
+  //     const res = await API.get(`/singers`);
+  //     setSinger(res.data.data);
+  //   } catch (error) {
+  //     console.log(error)
+  //   }
+  // };
 
 
   const checkAuth = () => {
@@ -31,8 +40,6 @@ function AddMusic() {
         navigate("/")
     } else if (state.user.status === "customer") {
         navigate("/dashboard")
-    } else {
-      getSingerID()
     }
 }
 
@@ -148,8 +155,8 @@ useEffect(() => {
               aria-label="form-select-lg" name="singer_id"
               >
               <option value="" className="d-none" selected disabled>Singer ID</option>
-              { singer.map((data) => (
-              <option value={data.id}>{data.name}</option>
+              { singer?.map((data) => (
+              <option value={data?.id}>{data?.name}</option>
               ))}
             </select>
 

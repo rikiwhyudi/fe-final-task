@@ -59,7 +59,7 @@ function Header() {
                             src="/assets/img/addsinger.svg"
                             alt="addsinger"
                           />
-                          <span>Add Singer</span>
+                          <span>Add Artist</span>
                         </div>
                         <hr />
                         <div
