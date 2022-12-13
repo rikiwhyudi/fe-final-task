@@ -51,6 +51,7 @@ useEffect(() => {
 
 
   const [preview, setPreview] = useState(null); //For image preview
+  const [mp3, setMp3] = useState(null); //For mp3 preview
   const [form, setForm] = useState({
     title: "",
     thumbnail: "",
@@ -68,9 +69,12 @@ useEffect(() => {
     });
 
     //create image url for preview
-    if (e.target.type === "file") {
+    if (e.target.name === "thumbnail") {
       const url = URL.createObjectURL(e.target.files[0]);
       setPreview(url);
+    } else if (e.target.name === "music_file") {
+      const url = URL.createObjectURL(e.target.files[0]);
+      setMp3(url);
     }
   };
 
@@ -90,7 +94,7 @@ useEffect(() => {
       const response = await API.post("/music", formData);
 
       alert("Music berhasil di tambahkan");
-      console.log("data music berhasil di tambahkan", response.data.data);
+      // console.log("data music berhasil di tambahkan", response.data.data);
     } catch (error) {
       console.log(error);
     }
@@ -104,7 +108,7 @@ useEffect(() => {
           <p>Add Music</p>
           <div className="d-flex justify-content-end me-5 mb-3 pe-3">
             {preview && (
-              <div>
+              <div className="prev-img">
                 <img
                   src={preview}
                   style={{
@@ -172,6 +176,11 @@ useEffect(() => {
               <label htmlFor="upload" className="file_mp3" for="music_file">
                 Attache
               </label>
+              {mp3 && (
+              <div className="ms-3 px-2 prev-mp3">
+                {mp3}
+              </div>
+            )}
             </div>
             <div className="d-grid justify-content-center">
               <button className="btn-add">Add Music</button>

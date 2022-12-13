@@ -26,7 +26,7 @@ function Header() {
   return (
     <>
       <Container>
-        <Navbar className="justify-content-between align-items-center">
+        <Navbar className="justify-content-between align-items-center fixed-top container">
           <Navbar.Brand onClick={handleLogo} className="pointer">
             <img
               src="/assets/img/coways-logo.svg"

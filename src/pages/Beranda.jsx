@@ -21,111 +21,97 @@ function Beranda() {
       navigate("/");
     }
   };
-
   // const userId = state.user.id
 
   const { data: userPrem, refetch } = useQuery("userCache", async () => {
     const response = await API.get(`/user/${state.user.id}`);
-    console.log("res",response.data);
+    console.log("res", response.data);
     return response.data.data;
   });
 
-
-  
-  const listPlay = userPrem?.transaction.subscription === "Active"
-  console.log("listPlay", listPlay);
-  
   // fetching API get all musics
   const { data: musics } = useQuery("musicsCache", async () => {
     const response = await API.get("/musics");
     // console.log(response.data);
     return response.data.data;
   });
-  
-  // const handlePlay = () => {
-  //   if (userPrem.transaction.subscription === "" || userPrem.transaction.subscription === "No Active") {
-  //     navigate("/sub-premium")
-  //   } else {
-  //     musics?.map(item => setMusicId(item))
-  //     alert(userPrem.transaction.subscription)
-  //     // alert("test")
-  //   }
-  // }
-  // console.log(musicId)
 
   useEffect(() => {
-    checkAuth()
-    refetch()
-  }, [state])
-
-  // console.log("user: ",state.user);
+    checkAuth();
+    refetch();
+  }, [state]);
 
   return (
     <>
       <Container className="mb-5">
         <CarouselSection />
         <div className="d-flex">
-          <div class="row row-cols-4 gap-3 justify-content-center">
-          
-            {(listPlay) ? (
+          <div class="row row-cols-4 gap-3 px-5">
+            {userPrem?.transaction.subscription === "Active" ||
+            state.user.status === "admin" ? (
               <>
-               {musics?.map((item) => (
-              <Card
-                style={{ width: "18rem", cursor: "pointer" }}
-                className="mt-5 card-mp3"
-                //kirim item ke func handle play
-                onClick={() => setMusicId(item)}
-              >
-                <Card.Img
-                  variant="top"
-                  src={item?.thumbnail}
-                  className="px-3 pt-3"
-                />
-                <Card.Body>
-                  <Card.Title className="text-white d-flex justify-content-between">
-                    <p>{item?.title}</p>
-                    <p className="fs-6">{item?.year}</p>
-                  </Card.Title>
-                  <Card.Text>
-                    <p className="title-mp3">{item?.singer.name}</p>
-                  </Card.Text>
-                </Card.Body>
-              </Card>
-              ))}     
-
+                {musics?.map((item) => (
+                  <Card
+                    style={{
+                      width: "192px",
+                      height: "240px",
+                      cursor: "pointer",
+                    }}
+                    className="mt-5 card-mp3"
+                    onClick={() => setMusicId(item)}
+                  >
+                    <Card.Img
+                      variant="top"
+                      src={item?.thumbnail}
+                      className="mp3-img pt-2"
+                    />
+                    <Card.Body>
+                      <div className="text-white cards">
+                        <div className="d-flex justify-content-between">
+                          <p className="fs-title">{item?.title}</p>
+                          <p className="fs-year">{item?.year}</p>
+                        </div>
+                        <p className="title-mp3">{item?.singer.name}</p>
+                      </div>
+                    </Card.Body>
+                  </Card>
+                ))}
               </>
             ) : (
-              <>       
-               {musics?.map((item) => (
-              <Card
-                style={{ width: "18rem", cursor: "pointer" }}
-                className="mt-5 card-mp3"
-                //kirim item ke func handle play
-                onClick={() => navigate("/sub-premium")}
-              >
-                <Card.Img
-                  variant="top"
-                  src={item?.thumbnail}
-                  className="px-3 pt-3"
-                />
-                <Card.Body>
-                  <Card.Title className="text-white d-flex justify-content-between">
-                    <p>{item?.title}</p>
-                    <p className="fs-6">{item?.year}</p>
-                  </Card.Title>
-                  <Card.Text>
-                    <p className="title-mp3">{item?.singer.name}</p>
-                  </Card.Text>
-                </Card.Body>
-              </Card>
-              ))} 
-          
+              <>
+                {musics?.map((item) => (
+                  <Card
+                    style={{
+                      width: "192px",
+                      height: "240px",
+                      cursor: "pointer",
+                    }}
+                    className="mt-5 card-mp3"
+                    //kirim item ke func handle play
+                    onClick={() => navigate("/sub-premium")}
+                  >
+                    <Card.Img
+                      variant="top"
+                      src={item?.thumbnail}
+                      className="mp3-img pt-2"
+                    />
+                    <Card.Body>
+                    <Card.Body>
+                      <div className="text-white cards">
+                        <div className="d-flex justify-content-between">
+                          <p className="fs-title">{item?.title}</p>
+                          <p className="fs-year">{item?.year}</p>
+                        </div>
+                        <p className="title-mp3">{item?.singer.name}</p>
+                      </div>
+                    </Card.Body>
+                    </Card.Body>
+                  </Card>
+                ))}
               </>
             )}
-            
           </div>
         </div>
-
         {musicId === "" ? (
           <></>
         ) : (

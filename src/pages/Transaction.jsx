@@ -36,7 +36,7 @@ function Transaction() {
   return (
     <>
       <Header />
-      <Container>
+      <Container className="mt5">
         <main className="mt-5 pay-table">
           <section>
             <h1 className="txt-white mb-5">Incoming Transaction</h1>

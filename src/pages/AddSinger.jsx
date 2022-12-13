@@ -78,7 +78,7 @@ function AddSinger() {
           <p>Add Artist</p>
           <div className="d-flex justify-content-end me-5 mb-3 pe-3">
             {preview && (
-              <div>
+              <div className="prev-img">
                 <img
                   src={preview}
                   style={{
