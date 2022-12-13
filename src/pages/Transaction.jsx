@@ -57,7 +57,7 @@ function Transaction() {
                     <td>{index+1}</td>
                     <td>{item?.user.name}</td>
                     <td>{item?.ammount}</td>
-                    <td>{item?.remaining}</td>
+                    <td>{item?.remaining_active}</td>
                     <td>{item?.subscription}</td>
                     <td>{item?.status}</td>
                   </tr>

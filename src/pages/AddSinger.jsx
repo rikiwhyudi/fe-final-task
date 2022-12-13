@@ -13,6 +13,8 @@ function AddSinger() {
   const navigate = useNavigate();
   const [state] = useContext(UserContext)
 
+  // console.log("=====>", state.isLogin)
+
   const checkAuth = () => {
     if (state.isLogin === false) {
       navigate("/")

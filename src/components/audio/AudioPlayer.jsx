@@ -4,7 +4,9 @@ import AudioPlayer from "react-h5-audio-player";
 import "react-h5-audio-player/lib/styles.css";
 
 function AudioPlay({ musicId }) {
-//   console.log("====>", musicId);
+  // console.log("====>", musicId);
+  // alert(musicId.music_file)
+
   return (
     <div>
       <Navbar fluid className="fixed-bottom container mp3">
