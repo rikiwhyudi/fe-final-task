@@ -4,22 +4,30 @@ import { useNavigate } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
 
 function Header() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [state, dispatch] = useContext(UserContext);
 
   const logout = () => {
-    console.log(state)
+    console.log(state);
     dispatch({
-        type: "LOGOUT"
-    })
-    navigate("/")
-}
+      type: "LOGOUT",
+    });
+    navigate("/");
+  };
+
+  const handleLogo = () => {
+    if (state.isLogin === true) {
+      navigate("/dashboard")
+    } else {
+      navigate("/")
+    }
+  }
 
   return (
     <>
       <Container>
-        <Navbar className="justify-content-between align-items-center">
-          <Navbar.Brand href="#">
+        <Navbar className="justify-content-between align-items-center fixed-top container">
+          <Navbar.Brand onClick={handleLogo} className="pointer">
             <img
               src="/assets/img/coways-logo.svg"
               className="d-inline-block align-top"
@@ -36,22 +44,31 @@ function Header() {
                   overlay={
                     <Popover>
                       <Popover.Body className="dropdown-body">
-                        <text className="pe-5 d-block text-dropdown">
-                          <img src="/assets/img/add-music.svg" alt="addmusic" />
+                        <div className="pe-5 text-dropdown" onClick={() => navigate("/add-music")}>
+                          <img
+                            src="/assets/img/add-music.svg"
+                            alt="addmusic"
+                          />
                           <span>Add Music</span>
-                        </text>
-                        <text className="pe-5 d-block text-dropdown">
+                        </div>
+                        <div
+                          className="pe-5 text-dropdown"
+                          onClick={() => navigate("/add-singer")}
+                        >
                           <img
                             src="/assets/img/addsinger.svg"
                             alt="addsinger"
                           />
-                          <span>Add Singer</span>
-                        </text>
+                          <span>Add Artist</span>
+                        </div>
                         <hr />
-                        <text className="pe-5 d-block text-dropdown mt-2" onClick={logout}>
+                        <div
+                          className="pe-5 d-block text-dropdown mt-2"
+                          onClick={logout}
+                        >
                           <img src="/assets/img/logout.svg" alt="logout" />
                           <span>Logout</span>
-                        </text>
+                        </div>
                       </Popover.Body>
                     </Popover>
                   }
@@ -71,15 +88,18 @@ function Header() {
                     overlay={
                       <Popover>
                         <Popover.Body className="dropdown-body">
-                          <text className="pe-5 d-block text-dropdown">
+                          <div className="pe-5 d-block text-dropdown" onClick={() => navigate("/sub-premium")}>
                             <img src="/assets/img/bill.svg" alt="bill" />
                             <span>Pay</span>
-                          </text>
+                          </div>
                           <hr />
-                          <text className="pe-5 d-block text-dropdown mt-2" onClick={logout}>
+                          <div
+                            className="pe-5 d-block text-dropdown mt-2"
+                            onClick={logout}
+                          >
                             <img src="/assets/img/logout.svg" alt="logout" />
                             <span>Logout</span>
-                          </text>
+                          </div>
                         </Popover.Body>
                       </Popover>
                     }

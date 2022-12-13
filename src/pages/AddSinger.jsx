@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Container } from "react-bootstrap";
 import { useMutation } from "react-query";
 import { useNavigate } from "react-router-dom";
@@ -13,15 +13,19 @@ function AddSinger() {
   const navigate = useNavigate();
   const [state] = useContext(UserContext)
 
+  // console.log("=====>", state.isLogin)
+
   const checkAuth = () => {
-    if (state.isLogin === "false") {
+    if (state.isLogin === false) {
       navigate("/")
-    } else if (state.isLogin === "costumer") {
+    } else if (state.user.status === "customer") {
       navigate("/dashboard")
     }
   }
   
-  checkAuth()
+  useEffect(() => {
+    checkAuth()
+  }, [])
 
   const [preview, setPreview] = useState(null); //For image preview
   const [form, setForm] = useState({
@@ -74,7 +78,7 @@ function AddSinger() {
           <p>Add Artist</p>
           <div className="d-flex justify-content-end me-5 mb-3 pe-3">
             {preview && (
-              <div>
+              <div className="prev-img">
                 <img
                   src={preview}
                   style={{

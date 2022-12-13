@@ -12,6 +12,8 @@ function Login() {
   document.title = "Coways | " + title
 
   const [state, dispatch] = useContext(UserContext)
+
+
   const [message, setMessage] = useState(null)
 
   const [form, setForm] = useState({
@@ -31,8 +33,9 @@ function Login() {
       e.preventDefault()
   
         // Insert data user to database
-        const response = await API.post('/login', form);
+        const response = await API.post("/login", form);
         // const { status, name, email, token } = response.data.data
+        // console.log("response login", response.data);
         if (response?.status === 200) {
           dispatch({
             type: 'LOGIN_SUCCESS',

@@ -5,7 +5,7 @@ function CarouselSection() {
   return (
     <>
     <Header />
-    <Carousel variant="dark" className="mt-5">
+    <Carousel className="mt5 carousel">
       <Carousel.Item>
         <img
           className="d-block w-100"
@@ -34,12 +34,6 @@ function CarouselSection() {
           src="/assets/img/carousel1.png"
           alt="Third slide"
           />
-        {/* <Carousel.Caption>
-          <h5>Third slide label</h5>
-          <p>
-            Praesent commodo cursus magna, vel scelerisque nisl consectetur.
-          </p>
-        </Carousel.Caption> */}
       </Carousel.Item>
     </Carousel>
     </>

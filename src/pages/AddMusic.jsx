@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import { API } from "../config/api";
 import { UserContext } from "../context/UserContext";
+import { useQuery } from "react-query";
 
 function AddMusic() {
   const title = "Add Music";
@@ -14,30 +15,43 @@ function AddMusic() {
 
   const navigate = useNavigate();
 
-  const [singer, setSinger] = useState([])
+    // fetching API get all singers
+    const { data: singer } = useQuery("singersCache", async () => {
+      const response = await API.get("/singers");
+      // console.log(response.data);
+      return response.data.data;
+    });
 
-  const getSingerID = async () => {
-    try {
-      const res = await API.get(`/singers`);
-      setSinger(res.data.data);
-    } catch (error) {
-      console.log(error)
+
+  // const [singer, setSinger] = useState([])
+
+  // const getSingerID = async () => {
+  //   try {
+  //     const res = await API.get(`/singers`);
+  //     setSinger(res.data.data);
+  //   } catch (error) {
+  //     console.log(error)
+  //   }
+  // };
+
+
+  const checkAuth = () => {
+    if (state.isLogin === false) {
+        navigate("/")
+    } else if (state.user.status === "customer") {
+        navigate("/dashboard")
     }
-  };
+}
 
+useEffect(() => {
+    checkAuth()
+}, [])
 
-  useEffect(() => {
-    if (state.isLogin === false || state.user.status === "customer") {
-      navigate('/')
-    } else {
-      getSingerID()
-    }
-  },[])
-
-  // console.log(singer)
+  // console.log(singer[0].id)
 
 
   const [preview, setPreview] = useState(null); //For image preview
+  const [mp3, setMp3] = useState(null); //For mp3 preview
   const [form, setForm] = useState({
     title: "",
     thumbnail: "",
@@ -46,6 +60,7 @@ function AddMusic() {
     music_file: "" ,
   });
 
+  // console.log(form)
   const handleChange = (e) => {
     setForm({
       ...form,
@@ -54,9 +69,12 @@ function AddMusic() {
     });
 
     //create image url for preview
-    if (e.target.type === "file") {
+    if (e.target.name === "thumbnail") {
       const url = URL.createObjectURL(e.target.files[0]);
       setPreview(url);
+    } else if (e.target.name === "music_file") {
+      const url = URL.createObjectURL(e.target.files[0]);
+      setMp3(url);
     }
   };
 
@@ -76,7 +94,7 @@ function AddMusic() {
       const response = await API.post("/music", formData);
 
       alert("Music berhasil di tambahkan");
-      console.log("data music berhasil di tambahkan", response.data.data);
+      // console.log("data music berhasil di tambahkan", response.data.data);
     } catch (error) {
       console.log(error);
     }
@@ -90,7 +108,7 @@ function AddMusic() {
           <p>Add Music</p>
           <div className="d-flex justify-content-end me-5 mb-3 pe-3">
             {preview && (
-              <div>
+              <div className="prev-img">
                 <img
                   src={preview}
                   style={{
@@ -140,8 +158,9 @@ function AddMusic() {
               className="form-select form-select-lg mb-3"
               aria-label="form-select-lg" name="singer_id"
               >
-              { singer.map((data) => (
-              <option name="singer_id" key={data.id} value={data.id}>{data.name}</option>
+              <option value="" className="d-none" selected disabled>Singer ID</option>
+              { singer?.map((data) => (
+              <option value={data?.id}>{data?.name}</option>
               ))}
             </select>
 
@@ -157,6 +176,11 @@ function AddMusic() {
               <label htmlFor="upload" className="file_mp3" for="music_file">
                 Attache
               </label>
+              {mp3 && (
+              <div className="ms-3 px-2 prev-mp3">
+                {mp3}
+              </div>
+            )}
             </div>
             <div className="d-grid justify-content-center">
               <button className="btn-add">Add Music</button>

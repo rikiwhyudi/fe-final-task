@@ -1,11 +1,13 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
+import Subscription from "./components/Subscription";
 import { API, setAuthToken } from "./config/api";
 import { UserContext } from "./context/UserContext";
 import AddMusic from "./pages/AddMusic";
 import AddSinger from "./pages/AddSinger";
 import Beranda from "./pages/Beranda";
 import Home from "./pages/Home";
+import Transaction from "./pages/Transaction";
 
 
 function App() {
@@ -68,6 +70,8 @@ function App() {
       <Route path='/dashboard' element={<Beranda />} />
       <Route path='/add-music' element={<AddMusic />} />
       <Route path='/add-singer' element={<AddSinger />} />
+      <Route path='/sub-premium' element={<Subscription />} />
+      <Route path='/income' element={<Transaction />} />
       </Routes>
     }
     </>
